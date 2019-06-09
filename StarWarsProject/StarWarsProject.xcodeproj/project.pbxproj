@@ -18,6 +18,7 @@
 		AA97A9142287743A0029C722 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA97A9132287743A0029C722 /* Vehicle.swift */; };
 		AA97A9162290B99C0029C722 /* StarShip.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA97A9152290B99C0029C722 /* StarShip.swift */; };
 		AA97A9182290C2430029C722 /* Planet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA97A9172290C2430029C722 /* Planet.swift */; };
+		AAAB98F122A5AB0C008ADF79 /* CharacterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAB98F022A5AB0C008ADF79 /* CharacterViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 		AA97A9132287743A0029C722 /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
 		AA97A9152290B99C0029C722 /* StarShip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarShip.swift; sourceTree = "<group>"; };
 		AA97A9172290C2430029C722 /* Planet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planet.swift; sourceTree = "<group>"; };
+		AAAB98F022A5AB0C008ADF79 /* CharacterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,9 +89,9 @@
 		AA9227E92280A8A500E250CE /* StarWarsProject */ = {
 			isa = PBXGroup;
 			children = (
+				AAAB98EB22A5A4F1008ADF79 /* View Controllers */,
 				AA97A910228772660029C722 /* Class Types */,
 				AA9227EA2280A8A500E250CE /* AppDelegate.swift */,
-				AA9227EC2280A8A500E250CE /* ViewController.swift */,
 				AA9227EE2280A8A500E250CE /* Main.storyboard */,
 				AA9227F12280A8B800E250CE /* Assets.xcassets */,
 				AA9227F32280A8B800E250CE /* LaunchScreen.storyboard */,
@@ -117,6 +119,15 @@
 				AA97A9172290C2430029C722 /* Planet.swift */,
 			);
 			path = "Class Types";
+			sourceTree = "<group>";
+		};
+		AAAB98EB22A5A4F1008ADF79 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				AA9227EC2280A8A500E250CE /* ViewController.swift */,
+				AAAB98F022A5AB0C008ADF79 /* CharacterViewController.swift */,
+			);
+			path = "View Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -224,6 +235,7 @@
 				AA97A9162290B99C0029C722 /* StarShip.swift in Sources */,
 				AA9227ED2280A8A500E250CE /* ViewController.swift in Sources */,
 				AA9227EB2280A8A500E250CE /* AppDelegate.swift in Sources */,
+				AAAB98F122A5AB0C008ADF79 /* CharacterViewController.swift in Sources */,
 				AA97A9182290C2430029C722 /* Planet.swift in Sources */,
 				AA97A9142287743A0029C722 /* Vehicle.swift in Sources */,
 				AA97A912228772FA0029C722 /* Character.swift in Sources */,

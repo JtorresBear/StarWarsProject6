@@ -29,6 +29,7 @@
                                                 <state key="normal" image="icon-characters"/>
                                                 <connections>
                                                     <action selector="justPrintForNow:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8pP-Sw-10g"/>
+                                                    <segue destination="wGN-TA-NTF" kind="show" id="bPn-Sf-gss"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Characters" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d3o-kT-5Wt">
@@ -98,39 +99,39 @@
             </objects>
             <point key="canvasLocation" x="137.68115942028987" y="134.5108695652174"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="ctZ-yh-7HJ">
+        <!--Character View Controller-->
+        <scene sceneID="8wl-vX-Ovn">
             <objects>
-                <viewController id="xem-Qc-rjn" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Ou9-gZ-IRi">
+                <viewController id="En0-p9-10d" customClass="CharacterViewController" customModule="StarWarsProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4ZH-Au-xkX">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="lBa-OR-l0i"/>
+                        <viewLayoutGuide key="safeArea" id="qAm-VX-kcV"/>
                     </view>
-                    <navigationItem key="navigationItem" id="4WB-eL-jba"/>
+                    <navigationItem key="navigationItem" id="c6F-MT-IHT"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nMX-zJ-KZ4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="70P-Mo-82l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1973.913043478261" y="134.5108695652174"/>
+            <point key="canvasLocation" x="2010" y="135"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="rIj-e0-P9g">
+        <scene sceneID="FL0-4t-uXt">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="scC-0U-WMi" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wGN-TA-NTF" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="aXS-Xr-JCh">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="GMq-ty-oiy">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="xem-Qc-rjn" kind="relationship" relationship="rootViewController" id="iUK-D7-fPp"/>
+                        <segue destination="En0-p9-10d" kind="relationship" relationship="rootViewController" id="Wko-GH-OTT"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gO2-Wh-QiM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tkY-go-XWv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1066.6666666666667" y="134.5108695652174"/>
+            <point key="canvasLocation" x="1074" y="135"/>
         </scene>
     </scenes>
     <resources>
