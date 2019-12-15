@@ -44,7 +44,6 @@ class Character: StarWarsList
         client.performRequest(with: home) { (home, error) in
             
             self.homeName = home
-            print("tried")
             
         }
     }

@@ -18,3 +18,9 @@ enum StarWarsError
     case jsonParsingFailure(message: String)
     
 }
+
+
+class StarWarsAlert
+{
+    
+}

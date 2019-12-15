@@ -22,6 +22,7 @@
 		AA97A9142287743A0029C722 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA97A9132287743A0029C722 /* Vehicle.swift */; };
 		AA97A9162290B99C0029C722 /* StarShip.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA97A9152290B99C0029C722 /* StarShip.swift */; };
 		AA97A9182290C2430029C722 /* Planet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA97A9172290C2430029C722 /* Planet.swift */; };
+		AA9F5A9423A2139D00BACC72 /* ExchangeRateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9F5A9323A2139D00BACC72 /* ExchangeRateViewController.swift */; };
 		AAA5DD5C22DFF7CC007D389C /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA5DD5B22DFF7CC007D389C /* Endpoint.swift */; };
 		AAA5DD5F22E7A86E007D389C /* JSONDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA5DD5E22E7A86E007D389C /* JSONDownloader.swift */; };
 		AAAB98F522AEE884008ADF79 /* CharactersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAB98F422AEE884008ADF79 /* CharactersViewController.swift */; };
@@ -59,6 +60,7 @@
 		AA97A9132287743A0029C722 /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
 		AA97A9152290B99C0029C722 /* StarShip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarShip.swift; sourceTree = "<group>"; };
 		AA97A9172290C2430029C722 /* Planet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planet.swift; sourceTree = "<group>"; };
+		AA9F5A9323A2139D00BACC72 /* ExchangeRateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateViewController.swift; sourceTree = "<group>"; };
 		AAA5DD5B22DFF7CC007D389C /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		AAA5DD5E22E7A86E007D389C /* JSONDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDownloader.swift; sourceTree = "<group>"; };
 		AAAB98F422AEE884008ADF79 /* CharactersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersViewController.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 				AAAB98F422AEE884008ADF79 /* CharactersViewController.swift */,
 				AAAB98F622AEE89A008ADF79 /* StarshipsViewController.swift */,
 				AAAB98F822AEE8BD008ADF79 /* VehiclesViewController.swift */,
+				AA9F5A9323A2139D00BACC72 /* ExchangeRateViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -279,6 +282,7 @@
 				AA97A9162290B99C0029C722 /* StarShip.swift in Sources */,
 				AA9227ED2280A8A500E250CE /* ViewController.swift in Sources */,
 				AA2B8D5423877BDE00CA42FD /* StarWarsError.swift in Sources */,
+				AA9F5A9423A2139D00BACC72 /* ExchangeRateViewController.swift in Sources */,
 				AA9227EB2280A8A500E250CE /* AppDelegate.swift in Sources */,
 				AA5563D022F94C1600084506 /* Stub.swift in Sources */,
 				AA97A9182290C2430029C722 /* Planet.swift in Sources */,

@@ -26,6 +26,7 @@ class CharactersViewController: UIViewController {
     @IBOutlet weak var usMeasureButton: UIButton!
     @IBOutlet weak var metricMeasureButton: UIButton!
     
+    @IBOutlet weak var exchaneRateButton: UIButton!
     
     @IBOutlet weak var picker: UIPickerView!
     
@@ -98,6 +99,14 @@ class CharactersViewController: UIViewController {
             }
         }
     }
+    
+    @IBAction func checkExchangeRates(_ sender: Any) {
+        let exchangeRateScreen = ExchangeRateViewController()
+        navigationController?.pushViewController(exchangeRateScreen, animated: true)
+        
+    }
+    
+    
     
     
     

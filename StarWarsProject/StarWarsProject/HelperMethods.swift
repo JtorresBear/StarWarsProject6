@@ -43,10 +43,13 @@ func getSmallest <T:Comparable> (array: [T]) -> T {
 extension Double {
     
     func toUSD()->String{
-        let temp = self * 4.074
+        var temp = self * 4074
+        temp = temp.rounded() / 100
+        
         
         return "$\(temp)"
     }
+    
     func toStringTwoDecimalPlaces() -> String {
         return String(format: "%.2f",self)
     }

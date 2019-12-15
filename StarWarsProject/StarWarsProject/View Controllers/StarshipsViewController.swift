@@ -25,6 +25,7 @@ class StarshipsViewController: UIViewController {
     @IBOutlet weak var creditsCurrencyButton: UIButton!
     @IBOutlet weak var usUnitsButton: UIButton!
     @IBOutlet weak var metricUnitsButon: UIButton!
+    @IBOutlet weak var exchangeButton: UIButton!
     
     @IBOutlet weak var picker: UIPickerView!
     
@@ -63,6 +64,10 @@ class StarshipsViewController: UIViewController {
         //self.lengthLabel.text = starShips[forStarShips].length
     }
     
+    @IBAction func checkExchangeRates(_ sender: Any) {
+        let exchangeRateScreen = ExchangeRateViewController()
+        navigationController?.pushViewController(exchangeRateScreen, animated: true)
+    }
     
     @IBAction func changeToDollars(_ sender: Any) {
         USD = true

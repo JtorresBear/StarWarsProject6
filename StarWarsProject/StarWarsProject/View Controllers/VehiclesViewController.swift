@@ -26,6 +26,7 @@ class VehiclesViewController: UIViewController {
     @IBOutlet weak var creditsButton: UIButton!
     @IBOutlet weak var usUnitsButton: UIButton!
     @IBOutlet weak var metricUnitsButton: UIButton!
+    @IBOutlet weak var exchangeButton: UIButton!
     
     var vehicles = [Vehicle]()
     
@@ -117,6 +118,10 @@ class VehiclesViewController: UIViewController {
     
     
     
+    @IBAction func exchangeRatesPage(_ sender: Any) {
+        let exchangeRateScreen = ExchangeRateViewController()
+        navigationController?.pushViewController(exchangeRateScreen, animated: true)
+    }
     
     
     

@@ -14,7 +14,7 @@ class StarWarsAPIClient {
     
     
     func retriveCharacters(withPath character: StarWarsPage, completion: @escaping ([Character], StarWarsError?) -> Void){
-        var endpoint = character
+        let endpoint = character
         
         performRequest(with: endpoint) { results, error in
             guard let results = results else {
@@ -28,8 +28,7 @@ class StarWarsAPIClient {
                 characters[count].getName(ofHome: characters[count].home)
                 count += 1
             }
-            
-            
+
             completion(characters, nil)
         }
         

@@ -19,15 +19,29 @@ class ViewController: UIViewController {
     var theseCharacters = [Character]()
     var theseVehicles = [Vehicle]()
     var theseStarships = [StarShip]()
+    let dispatchGroup = DispatchGroup()
 
     
     
   
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("buttons inactive")
+        CharactersButton.isEnabled = false
+        VehiclesButton.isEnabled = false
+        StarShipsButton.isEnabled = false
+        print("enter")
+        
+        dispatchGroup.enter()
         retrieveCharacters()
+        print("enter")
+        dispatchGroup.enter()
         retrieveVehicles()
+        print("enter")
+        dispatchGroup.enter()
         retrieveStarShips()
+        
+        
     }
 
     
@@ -37,10 +51,20 @@ class ViewController: UIViewController {
         while (dataCharacters.page < 10)
         {
             client.retriveCharacters(withPath: dataCharacters ) { [weak self] characters, error in
+                
+                if let error = error {
+                    self?.createAlert(for: error)
+                    return
+                }
+                
+                
                 self?.updateCharacters( with: characters)
             }
             dataCharacters.page += 1
         }
+        dispatchGroup.leave()
+        print("leave")
+        CharactersButton.isEnabled = true
     }
     
     
@@ -64,6 +88,9 @@ class ViewController: UIViewController {
             dataStarships.page += 1
             
         }
+        dispatchGroup.leave()
+        print("leave")
+        StarShipsButton.isEnabled = true
     }
     
     func updateStarShips(with starships: [StarShip]){
@@ -83,6 +110,9 @@ class ViewController: UIViewController {
             }
             dataVehicles.page += 1
         }
+        dispatchGroup.leave()
+        print("leave")
+        VehiclesButton.isEnabled = true
     }
     func updateVehicles(with vehicles: [Vehicle]){
         var count = 0
@@ -124,6 +154,27 @@ class ViewController: UIViewController {
             let viewController = segue.destination as! StarshipsViewController
             viewController.starShips = theseStarships
         }
+    }
+    
+    func createAlert(for problem: StarWarsError){
+        var message = ""
+        var action: UIAlertAction
+        
+        switch problem
+        {
+        case .invalidData: message = "data is invalid"
+        case .jsonConversionFailure: message = "Json Failure"
+        case .jsonParsingFailure(message: "parsing Failure"): message = "parsing Failure"
+        case .requestFailed: message = "request failed"
+        case .responseUnsuccessful: message = "response unsuccessful"
+        case .jsonParsingFailure( _):
+            print("something else happened")
+        }
+        
+        let alert = UIAlertController(title: "Something happened", message: message, preferredStyle: .alert)
+        
+        present(alert, animated: true, completion: nil)
+        
     }
     
     
