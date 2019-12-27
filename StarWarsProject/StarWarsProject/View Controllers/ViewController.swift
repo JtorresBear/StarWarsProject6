@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
+    // nothing on this page does anything anyore but i am not going to delete any of it . lol. Sorry. 
     
     @IBOutlet weak var CharactersButton: UIButton!
     @IBOutlet weak var VehiclesButton: UIButton!
