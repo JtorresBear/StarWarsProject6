@@ -29,15 +29,16 @@ class VehiclesViewController: UIViewController {
     @IBOutlet weak var exchangeButton: UIButton!
     
     var vehicles = [Vehicle]()
-    
+    let client = StarWarsAPIClient()
     var selectedVehicle = 0
     var USD = false
     var englishLength = false
+    let helper = helperMethods()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateLabels(selectedVehicle)
+        retrieveVehicles()
         picker.delegate = self
         picker.dataSource = self
         creditsButton.backgroundColor = .black
@@ -52,8 +53,6 @@ class VehiclesViewController: UIViewController {
         self.makeLabel.text = vehicles[forVehicles].make
         self.classLabel.text = vehicles[forVehicles].vehicleClass
         self.crewLabel.text = vehicles[forVehicles].crew.description
-        self.smallestLabel.text = getSmallest(array: vehicles).name
-        self.largestLabel.text = getBiggest(array: vehicles).name
         self.costLabel.text = vehicles[forVehicles].cost
         self.lengthLabel.text = vehicles[forVehicles].length
         changeLengthLabel()
@@ -155,6 +154,27 @@ class VehiclesViewController: UIViewController {
         usUnitsButton.backgroundColor = .clear
     }
     
+    func retrieveVehicles(){
+        var dataVehicles = StarWarsPage(starType: .Vehicle)
+        
+        while(dataVehicles.page < 5){
+            client.retrieveVehicles(withPath: dataVehicles ) { [weak self] vehicles, error in
+                self?.updateVehicles(with: vehicles)
+            }
+            dataVehicles.page += 1
+        }
+        
+    }
+    func updateVehicles(with veHicles: [Vehicle]){
+        var count = 0
+        while(count < veHicles.count){
+            vehicles.append(veHicles[count])
+            count += 1
+        }
+        updateLabels(0)
+        picker.reloadAllComponents()
+    }
+    
 
 }
 
@@ -177,7 +197,15 @@ extension VehiclesViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         updateLabels(row)
         selectedVehicle = row
-        changeCostLabel()
+        self.nameLabel.text = vehicles[row].name
+        self.makeLabel.text = vehicles[row].make
+        self.classLabel.text = vehicles[row].vehicleClass
+        self.crewLabel.text = vehicles[row].crew.description
+        self.smallestLabel.text = helper.getSmallest(array: vehicles).name
+        self.largestLabel.text = helper.getBiggest(array: vehicles).name
+        self.costLabel.text = vehicles[row].cost
+        self.lengthLabel.text = vehicles[row].length
         changeLengthLabel()
+        changeCostLabel()
     }
 }

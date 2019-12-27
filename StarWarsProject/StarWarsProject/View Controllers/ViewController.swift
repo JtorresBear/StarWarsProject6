@@ -26,21 +26,6 @@ class ViewController: UIViewController {
   
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("buttons inactive")
-        CharactersButton.isEnabled = false
-        VehiclesButton.isEnabled = false
-        StarShipsButton.isEnabled = false
-        print("enter")
-        
-        dispatchGroup.enter()
-        retrieveCharacters()
-        print("enter")
-        dispatchGroup.enter()
-        retrieveVehicles()
-        print("enter")
-        dispatchGroup.enter()
-        retrieveStarShips()
-        
         
     }
 
@@ -62,8 +47,6 @@ class ViewController: UIViewController {
             }
             dataCharacters.page += 1
         }
-        dispatchGroup.leave()
-        print("leave")
         CharactersButton.isEnabled = true
     }
     
@@ -88,8 +71,7 @@ class ViewController: UIViewController {
             dataStarships.page += 1
             
         }
-        dispatchGroup.leave()
-        print("leave")
+
         StarShipsButton.isEnabled = true
     }
     
@@ -110,8 +92,7 @@ class ViewController: UIViewController {
             }
             dataVehicles.page += 1
         }
-        dispatchGroup.leave()
-        print("leave")
+
         VehiclesButton.isEnabled = true
     }
     func updateVehicles(with vehicles: [Vehicle]){
@@ -142,17 +123,17 @@ class ViewController: UIViewController {
         if segue.identifier == "characterSegue"
         {
             let viewController = segue.destination as! CharactersViewController
-            viewController.characters = theseCharacters
+            //viewController.characters = theseCharacters
 
         }
         else
             if segue.identifier == "vehicleSegue"{
             let viewController = segue.destination as! VehiclesViewController
-            viewController.vehicles = theseVehicles
+            //viewController.vehicles = theseVehicles
         }
         else if segue.identifier == "starshipsSegue" {
             let viewController = segue.destination as! StarshipsViewController
-            viewController.starShips = theseStarships
+            //viewController.starShips = theseStarships
         }
     }
     

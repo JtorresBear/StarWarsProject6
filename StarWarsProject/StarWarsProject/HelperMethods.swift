@@ -8,7 +8,15 @@
 
 import Foundation
 
+
+
+struct helperMethods{}
 //gets the biggest
+
+
+
+extension helperMethods{
+
 func getBiggest <T:Comparable> (array: [T]) -> T {
     var temp = array[0]
     var count = 0
@@ -38,6 +46,8 @@ func getSmallest <T:Comparable> (array: [T]) -> T {
     }
     return temp
 }
+    
+}
 
 
 extension Double {
@@ -48,6 +58,14 @@ extension Double {
         
         
         return "$\(temp)"
+    }
+    
+    func usdTOCredits()->String{
+        
+        var temp = self / 4074
+        
+        
+        return "\(temp.toStringTwoDecimalPlaces())"
     }
     
     func toStringTwoDecimalPlaces() -> String {

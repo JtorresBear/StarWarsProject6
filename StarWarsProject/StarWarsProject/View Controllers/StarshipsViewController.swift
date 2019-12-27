@@ -29,16 +29,18 @@ class StarshipsViewController: UIViewController {
     
     @IBOutlet weak var picker: UIPickerView!
     
+    let client = StarWarsAPIClient()
     var starShips = [StarShip]()
     var USD = false
     var englishLength = false
     var selectedStarShip = 0
+    let helper = helperMethods()
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateLables(selectedStarShip)
+        retrieveStarShips()
         picker.dataSource = self
         picker.delegate = self
         metricUnitsButon.backgroundColor = .black
@@ -54,14 +56,8 @@ class StarshipsViewController: UIViewController {
         self.makeLabel.text = starShips[forStarShips].make
         self.classLabel.text = starShips[forStarShips].sClass
         self.crewLabel.text = starShips[forStarShips].crew
-        
-        self.smallestLabel.text = getSmallest(array: starShips).name
-        self.largestLabel.text =  getBiggest(array: starShips).name
-       
-        //self.costLabel.text = starShips[forStarShips].cost
         changeCostLabel()
         changeLengthLabel()
-        //self.lengthLabel.text = starShips[forStarShips].length
     }
     
     @IBAction func checkExchangeRates(_ sender: Any) {
@@ -149,6 +145,30 @@ class StarshipsViewController: UIViewController {
     }
     
     
+    func retrieveStarShips(){
+        var dataStarships = StarWarsPage(starType: .Starship)
+        while (dataStarships.page < 5){
+            
+            client.retrieveStarships(withPath: dataStarships ) { [weak self] starships, error in
+                self?.updateStarShips(with: starships)
+            }
+            dataStarships.page += 1
+            
+        }
+        
+    }
+    
+    func updateStarShips(with starships: [StarShip]){
+        var count = 0
+        while(count < starships.count){
+            starShips.append(starships[count])
+            count += 1
+        }
+        updateLables(0)
+        picker.reloadAllComponents()
+        
+    }
+    
     
 
     
@@ -172,7 +192,16 @@ extension StarshipsViewController: UIPickerViewDelegate, UIPickerViewDataSource 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         updateLables(row)
         selectedStarShip = row
-        changeLengthLabel()
+        
+        self.nameLabel.text = starShips[row].name
+        
+        self.makeLabel.text = starShips[row].make
+        self.classLabel.text = starShips[row].sClass
+        self.crewLabel.text = starShips[row].crew
+        
+        self.smallestLabel.text = helper.getSmallest(array: starShips).name
+        self.largestLabel.text =  helper.getBiggest(array: starShips).name
         changeCostLabel()
+        changeLengthLabel()
     }
 }

@@ -13,7 +13,9 @@ class ExchangeRateViewController: UIViewController {
     
     let currencyTextField = UITextField()
     let exchangeLable = UILabel()
+    let titleLabel = UILabel()
     let exchangeButton = UIButton()
+    let labelSwitch = UISwitch()
     
     
     override func viewDidLoad() {
@@ -21,6 +23,8 @@ class ExchangeRateViewController: UIViewController {
         setupTextField()
         setUpLabel()
         setUpButton()
+        setUpLabel2()
+        setUpSwitch()
         view.backgroundColor = .darkGray
         // Do any additional setup after loading the view.
     }
@@ -64,10 +68,13 @@ class ExchangeRateViewController: UIViewController {
             return
         }
         
-        
-        
-        
-        exchangeLable.text = creditsD.toUSD()
+        if labelSwitch.isOn == true{
+            titleLabel.text = "USD to Credits"
+            exchangeLable.text = creditsD.usdTOCredits()
+        } else {
+            titleLabel.text = "Credits to USD"
+            exchangeLable.text = creditsD.toUSD()
+        }
     }
     
     
@@ -80,10 +87,39 @@ class ExchangeRateViewController: UIViewController {
     }
     
     
+    func setSwitchConstraints(){
+        labelSwitch.translatesAutoresizingMaskIntoConstraints = false
+        labelSwitch.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 100).isActive = true
+        labelSwitch.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 50).isActive = true
+        labelSwitch.heightAnchor.constraint(equalToConstant: 50)
+    }
+    
+    
+    
     func setUpLabel(){
         exchangeLable.text = "Hello"
         view.addSubview(exchangeLable)
         setLabelConstraints()
+    }
+    func setUpLabel2(){
+        titleLabel.text = "Credits to USD"
+        view.addSubview(titleLabel)
+        setLabelConstraints2()
+    }
+    
+    func setUpSwitch(){
+        labelSwitch.isOn = false
+        view.addSubview(labelSwitch)
+        setSwitchConstraints()
+        labelSwitch.addTarget(self, action: #selector(switchTriggered(sentSwitch:)), for: .valueChanged)
+    }
+    
+    @objc func switchTriggered(sentSwitch: UISwitch) {
+        if labelSwitch.isOn == true{
+            titleLabel.text = "USD to Credits"
+        }else {
+            titleLabel.text = "Credits to USD"
+        }
     }
     
     
@@ -95,6 +131,15 @@ class ExchangeRateViewController: UIViewController {
         exchangeLable.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         exchangeLable.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -100).isActive = true
         exchangeLable.heightAnchor.constraint(equalToConstant: 50)
+        
+    }
+    
+    func setLabelConstraints2()
+    {
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        titleLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -150).isActive = true
+        titleLabel.heightAnchor.constraint(equalToConstant: 50)
         
     }
     
@@ -165,4 +210,6 @@ extension ExchangeRateViewController: UITextFieldDelegate {
         
     }
     
+    
 }
+

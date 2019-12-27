@@ -33,23 +33,21 @@ class CharactersViewController: UIViewController {
     var characters = [Character]()
     var selectedCharacter = 0
     var isMetric = true
+    let helper = helperMethods()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        retrieveCharacters()
         picker.delegate = self
         picker.dataSource = self
+        picker.reloadAllComponents()
         metricMeasureButton.backgroundColor = .black
-        updateLabels(selectedCharacter)
         self.navigationItem.title = "Characters"
-        // Do any additional setup after loading the view.
     }
     
     func updateLabels(_ forCharacters: Int)
     {
-        
-        self.smallestCharacterLabel.text = getSmallest(array: characters).name
-        self.largestCharacterLabel.text = getBiggest(array: characters).name
         self.homeLabel.text = characters[forCharacters].homeName
         self.eyesLabel.text = characters[forCharacters].eyeColor
         self.hairLabel.text = characters[forCharacters].hairColor
@@ -106,10 +104,60 @@ class CharactersViewController: UIViewController {
         
     }
     
+    func retrieveCharacters()
+    {
+        var dataCharacters = StarWarsPage(starType: .Character)
+        while (dataCharacters.page < 10)
+        {
+            client.retriveCharacters(withPath: dataCharacters ) { [weak self] characters, error in
+                
+                if let error = error {
+                    self?.createAlert(for: error)
+                    return
+                }
+                
+                
+                self?.updateCharacters( with: characters)
+            }
+            dataCharacters.page += 1
+        }
+        
+    }
     
     
+    func updateCharacters(with char : [Character])
+    {
+        var count = 0
+        while(count < char.count)
+        {
+            characters.append(char[count])
+            count+=1
+        }
+        updateLabels(0)
+        picker.reloadAllComponents()
+    }
     
     
+    func createAlert(for problem: StarWarsError){
+        var message = ""
+        var action: UIAlertAction
+        
+        switch problem
+        {
+        case .invalidData: message = "data is invalid"
+        case .jsonConversionFailure: message = "Json Failure"
+        case .jsonParsingFailure(message: "parsing Failure"): message = "parsing Failure"
+        case .requestFailed: message = "request failed"
+        case .responseUnsuccessful: message = "response unsuccessful"
+        case .jsonParsingFailure( _):
+            print("something else happened")
+        }
+        
+        let alert = UIAlertController(title: "Something happened", message: message, preferredStyle: .alert)
+        
+        present(alert, animated: true, completion: nil)
+        
+    }
     
     
     
@@ -136,6 +184,14 @@ extension CharactersViewController: UIPickerViewDelegate, UIPickerViewDataSource
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         updateLabels(row)
         selectedCharacter = row
+        
+        self.smallestCharacterLabel.text = helper.getSmallest(array: characters).name
+        self.largestCharacterLabel.text = helper.getBiggest(array: characters).name
+        self.homeLabel.text = characters[row].homeName
+        self.eyesLabel.text = characters[row].eyeColor
+        self.hairLabel.text = characters[row].hairColor
+        self.dobLabel.text = characters[row].birthYear
+        self.nameLabel.text = characters[row].name
         changeHeightLabel()
         
     }
