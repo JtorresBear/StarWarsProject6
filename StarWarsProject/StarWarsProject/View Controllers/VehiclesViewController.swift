@@ -27,6 +27,8 @@ class VehiclesViewController: UIViewController {
     @IBOutlet weak var usUnitsButton: UIButton!
     @IBOutlet weak var metricUnitsButton: UIButton!
     @IBOutlet weak var exchangeButton: UIButton!
+    @IBOutlet weak var exchangeRateTextField: UITextField!
+    @IBOutlet weak var exchangeLabel: UILabel!
     
     var vehicles = [Vehicle]()
     let client = StarWarsAPIClient()
@@ -34,7 +36,7 @@ class VehiclesViewController: UIViewController {
     var USD = false
     var englishLength = false
     let helper = helperMethods()
-    
+    var USDollar: Double = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +45,7 @@ class VehiclesViewController: UIViewController {
         picker.dataSource = self
         creditsButton.backgroundColor = .black
         metricUnitsButton.backgroundColor = .black
+        exchangeSetup()
 
         self.navigationItem.title = "Vehicles"
     }
@@ -59,8 +62,27 @@ class VehiclesViewController: UIViewController {
         changeCostLabel()
     }
     
+    func exchangeSetup(){
+        
+        let toolbar = UIToolbar(frame: CGRect(origin: .zero, size: .init(width: view.frame.size.width, height: 30 )))
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        let donebutton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonAction))
+        
+        toolbar.setItems([flexSpace,donebutton], animated: false)
+        toolbar.sizeToFit()
+        
+        exchangeRateTextField.keyboardType = .numberPad
+        exchangeRateTextField.text = "1"
+        exchangeRateTextField.delegate = self
+        exchangeRateTextField.inputAccessoryView = toolbar
+    }
     
-    
+    @objc func doneButtonAction()
+    {
+        self.view.endEditing(true)
+    }
     
     
     func changeCostLabel()
@@ -72,7 +94,7 @@ class VehiclesViewController: UIViewController {
                 self.costLabel.text = vehicles[selectedVehicle].cost
             } else
             {
-                self.costLabel.text = vehicles[selectedVehicle].doubleCost!.toUSD()
+                self.costLabel.text = (USDollar * vehicles[selectedVehicle].cost.toDouble()).description
             }
         }
         if(!USD)
@@ -87,6 +109,33 @@ class VehiclesViewController: UIViewController {
         }
         
     }
+    
+    func checkTextField(){
+        
+        var creditsDigit: Double = 0
+        
+        guard let credits = exchangeRateTextField.text else {
+            return
+        }
+        
+        if credits == "" {
+            createAlert(for: .noInput)
+            return
+        } else if !credits.isDouble() {
+            createAlert(for: .notNumber)
+            return
+        } else if credits.isDouble() {
+            creditsDigit = credits.toDouble()
+        }
+        
+        if creditsDigit < 0 {
+            createAlert(for: .lessThanZero)
+            return
+        }
+        
+        USDollar = creditsDigit
+    }
+    
     
     func changeLengthLabel()
     {
@@ -115,17 +164,9 @@ class VehiclesViewController: UIViewController {
     
     
     
-    
-    
-    @IBAction func exchangeRatesPage(_ sender: Any) {
-        let exchangeRateScreen = ExchangeRateViewController()
-        navigationController?.pushViewController(exchangeRateScreen, animated: true)
-    }
-    
-    
-    
     @IBAction func costInDollars(_ sender: Any) {
         USD = true
+        checkTextField()
         updateLabels(selectedVehicle)
         usDollarButton.backgroundColor = .black
         creditsButton.backgroundColor = .clear
@@ -180,7 +221,7 @@ class VehiclesViewController: UIViewController {
 
 //1 credit = $4.075
 
-extension VehiclesViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+extension VehiclesViewController: UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -205,7 +246,55 @@ extension VehiclesViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         self.largestLabel.text = helper.getBiggest(array: vehicles).name
         self.costLabel.text = vehicles[row].cost
         self.lengthLabel.text = vehicles[row].length
+        checkTextField()
         changeLengthLabel()
         changeCostLabel()
+    }
+    
+    func createAlert(for error: ExchangeError)
+    {
+        var message = ""
+        
+        var action = UIAlertAction(title: "OK", style: .default) { (action) in
+            self.creditsButton.backgroundColor = .black
+            self.usDollarButton.backgroundColor = .clear
+            self.USD = false
+            self.exchangeRateTextField.text = "1"
+        }
+        
+        switch error{
+        case .noInput: message = "There's no Input"
+        case .notGalacticCredit: message = "Use a galactic Credit to see US Dollar"
+        case .notNumber: message = "Please no letters or symbols"
+        case .lessThanZero: message = "Has to be greater than 0"
+        case .equalToZero: message = "Has to be greater than 0"
+        case .lessThanOne: message = "Exchange Rate less than 1"
+        }
+        
+        
+        let alert = UIAlertController(title: "Something happened", message: message, preferredStyle: .alert)
+        alert.addAction(action)
+     
+        present(alert, animated: true, completion: nil)
+    }
+    
+    
+    enum ExchangeError{
+        case noInput
+        case notGalacticCredit
+        case notNumber
+        case lessThanZero
+        case equalToZero
+        case lessThanOne
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        checkTextField()
+        updateLabels(selectedVehicle)
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        checkTextField()
+        updateLabels(selectedVehicle)
     }
 }

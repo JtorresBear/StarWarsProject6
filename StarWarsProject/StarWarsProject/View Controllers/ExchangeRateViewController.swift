@@ -210,7 +210,7 @@ class ExchangeRateViewController: UIViewController {
             self.exchangeTextField.text = "1"
         }
         
-        switch error{
+        switch error {
         case .noInput: message = "There's no Input"
         case .notGalacticCredit: message = "Use a galactic Credit to see US Dollar"
         case .notNumber: message = "Please no letters or symbols"

@@ -26,6 +26,7 @@ class StarshipsViewController: UIViewController {
     @IBOutlet weak var usUnitsButton: UIButton!
     @IBOutlet weak var metricUnitsButon: UIButton!
     @IBOutlet weak var exchangeButton: UIButton!
+    @IBOutlet weak var exchangeRateTextField: UITextField!
     
     @IBOutlet weak var picker: UIPickerView!
     
@@ -35,6 +36,7 @@ class StarshipsViewController: UIViewController {
     var englishLength = false
     var selectedStarShip = 0
     let helper = helperMethods()
+    var USDollar: Double = 0
     
     
     
@@ -45,6 +47,7 @@ class StarshipsViewController: UIViewController {
         picker.delegate = self
         metricUnitsButon.backgroundColor = .black
         creditsCurrencyButton.backgroundColor = .black
+        exchangeSetup()
         self.navigationItem.title = "Star Ships"
         
         
@@ -59,6 +62,27 @@ class StarshipsViewController: UIViewController {
         changeCostLabel()
         changeLengthLabel()
     }
+    func exchangeSetup(){
+        
+        let toolbar = UIToolbar(frame: CGRect(origin: .zero, size: .init(width: view.frame.size.width, height: 30 )))
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        let donebutton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonAction))
+        
+        toolbar.setItems([flexSpace,donebutton], animated: false)
+        toolbar.sizeToFit()
+        
+        exchangeRateTextField.keyboardType = .numberPad
+        exchangeRateTextField.text = "1"
+        exchangeRateTextField.delegate = self
+        exchangeRateTextField.inputAccessoryView = toolbar
+    }
+    
+    @objc func doneButtonAction()
+    {
+        self.view.endEditing(true)
+    }
     
     @IBAction func checkExchangeRates(_ sender: Any) {
         let exchangeRateScreen = ExchangeRateViewController()
@@ -67,6 +91,7 @@ class StarshipsViewController: UIViewController {
     
     @IBAction func changeToDollars(_ sender: Any) {
         USD = true
+        checkTextField()
         updateLables(selectedStarShip)
         usCurrencyButton.backgroundColor = .black
         creditsCurrencyButton.backgroundColor = .clear
@@ -105,7 +130,7 @@ class StarshipsViewController: UIViewController {
                 self.costLabel.text = starShips[selectedStarShip].cost
             } else
             {
-                self.costLabel.text = starShips[selectedStarShip].doubleCost!.toUSD()
+                self.costLabel.text = (USDollar * starShips[selectedStarShip].cost.toDouble()).description
             }
         }
         if(!USD)
@@ -118,6 +143,32 @@ class StarshipsViewController: UIViewController {
                 self.costLabel.text = starShips[selectedStarShip].doubleCost!.description
             }
         }
+    }
+    
+    func checkTextField(){
+        
+        var creditsDigit: Double = 0
+        
+        guard let credits = exchangeRateTextField.text else {
+            return
+        }
+        
+        if credits == "" {
+            createAlert(for: .noInput)
+            return
+        } else if !credits.isDouble() {
+            createAlert(for: .notNumber)
+            return
+        } else if credits.isDouble() {
+            creditsDigit = credits.toDouble()
+        }
+        
+        if creditsDigit < 0 {
+            createAlert(for: .lessThanZero)
+            return
+        }
+        
+        USDollar = creditsDigit
     }
     
     func changeLengthLabel()
@@ -176,7 +227,7 @@ class StarshipsViewController: UIViewController {
 }
 
 
-extension StarshipsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+extension StarshipsViewController: UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -201,7 +252,55 @@ extension StarshipsViewController: UIPickerViewDelegate, UIPickerViewDataSource 
         
         self.smallestLabel.text = helper.getSmallest(array: starShips).name
         self.largestLabel.text =  helper.getBiggest(array: starShips).name
+        checkTextField()
         changeCostLabel()
         changeLengthLabel()
+    }
+    
+    func createAlert(for error: ExchangeError)
+    {
+        var message = ""
+        
+        var action = UIAlertAction(title: "OK", style: .default) { (action) in
+            self.usCurrencyButton.backgroundColor = .black
+            self.creditsCurrencyButton.backgroundColor = .clear
+            self.USD = false
+            self.exchangeRateTextField.text = "1"
+        }
+        
+        switch error{
+        case .noInput: message = "There's no Input"
+        case .notGalacticCredit: message = "Use a galactic Credit to see US Dollar"
+        case .notNumber: message = "Please no letters or symbols"
+        case .lessThanZero: message = "Has to be greater than 0"
+        case .equalToZero: message = "Has to be greater than 0"
+        case .lessThanOne: message = "Exchange Rate less than 1"
+        }
+        
+        
+        let alert = UIAlertController(title: "Something happened", message: message, preferredStyle: .alert)
+        alert.addAction(action)
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    
+    enum ExchangeError{
+        case noInput
+        case notGalacticCredit
+        case notNumber
+        case lessThanZero
+        case equalToZero
+        case lessThanOne
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        checkTextField()
+        updateLables(selectedStarShip)
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        checkTextField()
+        updateLables(selectedStarShip)
     }
 }

@@ -134,6 +134,7 @@ class CharactersViewController: UIViewController {
             count+=1
         }
         updateLabels(0)
+        self.homeLabel.text = characters[0].homeName
         picker.reloadAllComponents()
     }
     
@@ -187,11 +188,11 @@ extension CharactersViewController: UIPickerViewDelegate, UIPickerViewDataSource
         
         self.smallestCharacterLabel.text = helper.getSmallest(array: characters).name
         self.largestCharacterLabel.text = helper.getBiggest(array: characters).name
-        self.homeLabel.text = characters[row].homeName
         self.eyesLabel.text = characters[row].eyeColor
         self.hairLabel.text = characters[row].hairColor
         self.dobLabel.text = characters[row].birthYear
         self.nameLabel.text = characters[row].name
+        self.homeLabel.text = characters[row].homeName
         changeHeightLabel()
         
     }

@@ -19,8 +19,3 @@ enum StarWarsError
     
 }
 
-
-class StarWarsAlert
-{
-    
-}
